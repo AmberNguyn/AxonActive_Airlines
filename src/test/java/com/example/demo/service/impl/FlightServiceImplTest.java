@@ -1,6 +1,8 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.Airplane;
 import com.example.demo.entity.Flight;
+import com.example.demo.service.AirplaneService;
 import com.example.demo.service.FlightService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
@@ -26,16 +28,32 @@ class FlightServiceImplTest {
     class casesAfterSave {
         @Autowired
         FlightService flightService;
+        @Autowired
+        AirplaneService airplaneService;
 
 
         @BeforeEach
         void setup() {
+            Airplane airplane1 = Airplane.builder()
+                    .airplaneId(101)
+                    .airplaneType("Boeing")
+                    .flyingDistance(10000)
+                    .build();
+            airplaneService.saveAirplane(airplane1);
+
+            Airplane airplane2 = Airplane.builder()
+                    .airplaneId(102)
+                    .airplaneType("Airbus")
+                    .flyingDistance(12000)
+                    .build();
+            airplaneService.saveAirplane(airplane2);
+
             Flight flight1 = Flight.builder()
                     .cost(1000)
                     .arrivalGate("DAD")
                     .departureGate("SGN")
                     .arrivalTime(LocalDate.of(2000, 10, 10))
-                    .flightID("A760")
+                    .id("A760")
                     .distance(9500)
                     .departureTime(LocalDate.of(2000, 10, 9))
                     .build();
@@ -48,7 +66,7 @@ class FlightServiceImplTest {
                     .departureTime(LocalDate.of(2000, 10, 17))
                     .departureGate("DAD")
                     .distance(9000)
-                    .flightID("A123")
+                    .id("A123")
                     .build();
             flightService.saveFlight(flight2);
         }
@@ -82,6 +100,13 @@ class FlightServiceImplTest {
         void findTheNumberOfFlightByDepartureGate_shouldReturnZero_whenNotFound() {
             assertEquals(0, flightService.findTheNumberOfFlightByDepartureGate("HNN"));
         }
+
+        @Test
+        void findFlightsThatCanBeDoneByACertainTypeOfAirplane_shouldReturnAListOfFlights_whenFound()
+        {
+            assertEquals(2, flightService.findFlightsThatCanBeDoneByACertainTypeOfAirplane("Boeing").size());
+        }
+
 
     }
 

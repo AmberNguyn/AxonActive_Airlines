@@ -4,6 +4,7 @@ import com.example.demo.entity.Airplane;
 import com.example.demo.repository.AirplaneRepository;
 import com.example.demo.service.AirplaneService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -29,6 +30,12 @@ public class AirplaneServiceImpl implements AirplaneService {
     public int findHowManyAirplaneByAirplaneTypeContaining(String typeOfAirplane)
     {
         return airplaneRepository.findAirplaneByAirplaneTypeContaining(typeOfAirplane).size();
+    }
+
+    //13.	Cho biết các loại máy bay có thể thực hiện chuyến bay VN280.
+    public List<String> findAirplaneThatCanSatisfyACertainFlight(@Param("flightID") String flightId)
+    {
+        return airplaneRepository.findAirplaneThatCanSatisfyACertainFlight(flightId);
     }
 
 

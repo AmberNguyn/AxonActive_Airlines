@@ -1,7 +1,9 @@
 package com.example.demo.service.impl;
 
 import com.example.demo.entity.Airplane;
+import com.example.demo.entity.Flight;
 import com.example.demo.service.AirplaneService;
+import com.example.demo.service.FlightService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,6 +26,8 @@ class AirplaneServiceImplTest {
     class TestCasesAfterSaved {
         @Autowired
         AirplaneService airplaneService;
+        @Autowired
+        FlightService flightService;
 
         @BeforeEach
         void setup() {
@@ -38,6 +44,28 @@ class AirplaneServiceImplTest {
                     .flyingDistance(12000)
                     .build();
             airplaneService.saveAirplane(airplane2);
+
+            Flight flight1 = Flight.builder()
+                    .cost(1000)
+                    .arrivalGate("DAD")
+                    .departureGate("SGN")
+                    .arrivalTime(LocalDate.of(2000, 10, 10))
+                    .id("A760")
+                    .distance(9500)
+                    .departureTime(LocalDate.of(2000, 10, 9))
+                    .build();
+            flightService.saveFlight(flight1);
+
+            Flight flight2 = Flight.builder()
+                    .cost(900)
+                    .arrivalTime(LocalDate.of(2000, 10, 15))
+                    .arrivalGate("SGN")
+                    .departureTime(LocalDate.of(2000, 10, 17))
+                    .departureGate("DAD")
+                    .distance(9000)
+                    .id("A123")
+                    .build();
+            flightService.saveFlight(flight2);
 
 
         }
@@ -66,6 +94,14 @@ class AirplaneServiceImplTest {
         {
             assertEquals(0, airplaneService.findHowManyAirplaneByAirplaneTypeContaining("dad"));
         }
+
+        @Test
+        void findAirplaneThatCanSatisfyACertainFlight_shouldReturnAListOfAirplane_whenFound()
+        {
+            assertEquals(2, airplaneService.findAirplaneThatCanSatisfyACertainFlight("A760").size());
+        }
+
+
     }
 
 }

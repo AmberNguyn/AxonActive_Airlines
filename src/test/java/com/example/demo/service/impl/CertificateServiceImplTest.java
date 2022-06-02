@@ -86,7 +86,7 @@ class CertificateServiceImplTest {
             certificateService.saveCertificate(certificate2);
 
             Certificate certificate3 = Certificate.builder()
-                    .airplane(airplane2)
+                    .airplane(airplane3)
                     .employee(employee1)
                     .build();
             certificateService.saveCertificate(certificate3);

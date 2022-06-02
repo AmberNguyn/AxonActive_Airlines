@@ -18,7 +18,7 @@ import java.time.LocalDate;
 
 public class Flight {
     @Id
-    private String flightID;
+    private String id;
 
     @Size(max = 3)
     private String departureGate;

@@ -58,4 +58,10 @@ public class FlightServiceImpl implements FlightService {
         return flightRepository.findFlightByDepartureGate(departureGate).size();
     }
 
+    //14.	Cho biết các chuyến bay có thể ñược thực hiện bởi máy bay Airbus A320.
+    public List<String> findFlightsThatCanBeDoneByACertainTypeOfAirplane(String airplaneType)
+    {
+        return flightRepository.findFlightsThatCanBeDoneByACertainTypeOfAirplane(airplaneType);
+    }
+
 }

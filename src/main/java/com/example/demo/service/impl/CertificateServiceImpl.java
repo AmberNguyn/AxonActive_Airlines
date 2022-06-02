@@ -53,7 +53,8 @@ public class CertificateServiceImpl implements CertificateService{
     {
         return certificateRepository.findAllThePilotsWhoCanFlyTwoTypesOfAirplanes(firstType, secondType);
     }
-    
+
+
 
 
 }

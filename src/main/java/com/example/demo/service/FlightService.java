@@ -3,6 +3,8 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Flight;
 import com.example.demo.repository.FlightRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 import java.util.Optional;
@@ -27,4 +29,10 @@ public interface FlightService {
 
     //6.	Có bao nhiêu chuyến bay xuất phát từ Sài Gòn (SGN).
     public int findTheNumberOfFlightByDepartureGate(String departureGate);
+
+
+    //14.	Cho biết các chuyến bay có thể ñược thực hiện bởi máy bay Airbus A320.
+
+    public List<String> findFlightsThatCanBeDoneByACertainTypeOfAirplane(String airplaneType);
+
 }

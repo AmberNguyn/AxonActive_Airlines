@@ -37,7 +37,7 @@ public class FlightResource {
     @PostMapping
     public ResponseEntity<Flight> createFlight(@RequestBody Flight flight) {
         Flight flightCreate = flightService.saveFlight(flight);
-        return ResponseEntity.created(URI.create(FlightResource.PATH + "/" + flightCreate.getFlightID())).body(flightCreate);
+        return ResponseEntity.created(URI.create(FlightResource.PATH + "/" + flightCreate.getId())).body(flightCreate);
     }
 
     @DeleteMapping("/{id}")
