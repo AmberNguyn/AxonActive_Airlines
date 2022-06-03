@@ -1,7 +1,12 @@
 package com.example.demo.service.impl;
 
+import com.example.demo.entity.Airplane;
+import com.example.demo.entity.Certificate;
 import com.example.demo.entity.Employee;
+import com.example.demo.service.AirplaneService;
+import com.example.demo.service.CertificateService;
 import com.example.demo.service.EmployeeService;
+import org.checkerframework.checker.units.qual.A;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
@@ -22,6 +27,10 @@ class EmployeeServiceImplTest {
     class TestCasesAfterSaved {
         @Autowired
         EmployeeService employeeService;
+        @Autowired
+        CertificateService certificateService;
+        @Autowired
+        AirplaneService airplaneService;
 
         @BeforeEach
         void setup() {
@@ -38,6 +47,49 @@ class EmployeeServiceImplTest {
                     .salary(11000)
                     .build();
             employeeService.saveEmployee(employee2);
+
+            Airplane airplane1 = Airplane.builder()
+                    .type("Boeing")
+                    .id(747)
+                    .range(4000)
+                    .build();
+            airplaneService.saveAirplane(airplane1);
+
+            Airplane airplane2 = Airplane.builder()
+                    .type("Boeing")
+                    .id(747)
+                    .range(4000)
+                    .build();
+            airplaneService.saveAirplane(airplane2);
+
+            Airplane airplane3 = Airplane.builder()
+                    .type("Airbus")
+                    .id(740)
+                    .range(6000)
+                    .build();
+            airplaneService.saveAirplane(airplane3);
+
+
+            Certificate certificate1 = Certificate.builder()
+                    .airplane(airplane1)
+                    .employee(employee1)
+                    .build();
+            certificateService.saveCertificate(certificate1);
+
+
+            Certificate certificate2 = Certificate.builder()
+                    .airplane(airplane2)
+                    .employee(employee2)
+                    .build();
+            certificateService.saveCertificate(certificate2);
+
+            Certificate certificate3 = Certificate.builder()
+                    .airplane(airplane3)
+                    .employee(employee1)
+                    .build();
+            certificateService.saveCertificate(certificate3);
+
+
 
         }
 
@@ -58,6 +110,19 @@ class EmployeeServiceImplTest {
         {
             assertEquals(21000, employeeService.totalSalary());
         }
+
+        @Test
+        void findAllTheEmployeesWhoCanFlyACertainTypeOfAirplane_shouldReturnAListOfNames_WhenFound()
+        {
+            assertEquals(1, employeeService.findNameOfAllTheEmployeesWhoCanFindACertainTypeofAirplane("Airbus").size());
+        }
+
+
+
+
+
+
+
     }
 
 

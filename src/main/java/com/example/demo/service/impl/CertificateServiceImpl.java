@@ -5,7 +5,6 @@ import com.example.demo.entity.Employee;
 import com.example.demo.repository.CertificateRepository;
 import com.example.demo.service.CertificateService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -33,7 +32,7 @@ public class CertificateServiceImpl implements CertificateService{
     public List<Employee> findEmployeeByAirplaneAirplaneId(Integer airplaneId)
     {
         List<Employee> listOfEmployeesWhoCanFlyAnAirplane = new ArrayList<>();
-        for (Certificate certificate: certificateRepository.findEmployeeByAirplaneAirplaneId(airplaneId)
+        for (Certificate certificate: certificateRepository.findEmployeeByAirplaneId(airplaneId)
              ) {
             listOfEmployeesWhoCanFlyAnAirplane.add(certificate.getEmployee());
         }
@@ -54,7 +53,12 @@ public class CertificateServiceImpl implements CertificateService{
         return certificateRepository.findAllThePilotsWhoCanFlyTwoTypesOfAirplanes(firstType, secondType);
     }
 
-
+    //15.
+    @Override
+    public List<Certificate> findPilotsByAirplaneTypeContaining(String airplaneType)
+    {
+        return certificateRepository.findPilotsByAirplaneTypeContaining(airplaneType);
+    }
 
 
 }

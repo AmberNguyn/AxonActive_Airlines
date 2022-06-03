@@ -25,7 +25,7 @@ class FlightServiceImplTest {
 
 
     @Nested
-    class casesAfterSave {
+    class TestCasesAfterSave {
         @Autowired
         FlightService flightService;
         @Autowired
@@ -35,16 +35,16 @@ class FlightServiceImplTest {
         @BeforeEach
         void setup() {
             Airplane airplane1 = Airplane.builder()
-                    .airplaneId(101)
-                    .airplaneType("Boeing")
-                    .flyingDistance(10000)
+                    .id(101)
+                    .type("Boeing")
+                    .range(10000)
                     .build();
             airplaneService.saveAirplane(airplane1);
 
             Airplane airplane2 = Airplane.builder()
-                    .airplaneId(102)
-                    .airplaneType("Airbus")
-                    .flyingDistance(12000)
+                    .id(102)
+                    .type("Airbus")
+                    .range(12000)
                     .build();
             airplaneService.saveAirplane(airplane2);
 
@@ -102,12 +102,26 @@ class FlightServiceImplTest {
         }
 
         @Test
-        void findFlightsThatCanBeDoneByACertainTypeOfAirplane_shouldReturnAListOfFlights_whenFound()
+        void findAllTheFlightsThatCanBeDoneByACertainTypeOfAirplane_shouldReturnAListOfTwoAirplanes_whenFound()
         {
-            assertEquals(2, flightService.findFlightsThatCanBeDoneByACertainTypeOfAirplane("Boeing").size());
+            assertEquals(2, flightService.findAllTheFlightsThatCanBeDoneByACertainTypeOfAirplane("Boeing").size());
+        }
+
+        @Test
+        void findFlightsThatProvidesTwoWaysTickets_shouldReturnAListOfTwo_whenFound()
+        {
+            assertEquals(2, flightService.findFlightThatProvidesTwoWaysTickets("SGN", "DAD").size());
+        }
+
+        //test 18
+        @Test
+        void fsd()
+        {
+            assertEquals(2, flightService.findNumberOfFlightsPerDepartureGate().size());
         }
 
 
+        //test 19
     }
 
 

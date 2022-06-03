@@ -17,4 +17,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     Integer totalSalary();
 
 
+    //15. Cho biết tên của các phi công lái máy bay Boeing.
+
 }

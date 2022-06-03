@@ -21,5 +21,9 @@ public interface EmployeeService {
     //8. Cho biết tổng số lương phải trả cho các nhân viên.
     public Integer totalSalary();
 
+    //15.
+    public List<String> findNameOfAllTheEmployeesWhoCanFindACertainTypeofAirplane(String airplaneType);
+    public List<Employee> allEmployees();
+
 
 }

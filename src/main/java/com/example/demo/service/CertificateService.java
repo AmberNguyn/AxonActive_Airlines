@@ -23,4 +23,8 @@ public interface CertificateService {
     //12.	Cho biết mã số của các phi công vừa lái được Boeing vừa lái được Airbus.
     public List<Integer> findAllThePilotsWhoCanFlyTwoTypesOfAirplanes(String firstType, String secondType);
 
+    //15.
+    public List<Certificate> findPilotsByAirplaneTypeContaining(String airplaneType);
+
+
 }

@@ -32,16 +32,16 @@ class AirplaneServiceImplTest {
         @BeforeEach
         void setup() {
             Airplane airplane1 = Airplane.builder()
-                    .airplaneId(101)
-                    .airplaneType("Boeing")
-                    .flyingDistance(10000)
+                    .id(101)
+                    .type("Boeing")
+                    .range(10000)
                     .build();
             airplaneService.saveAirplane(airplane1);
 
             Airplane airplane2 = Airplane.builder()
-                    .airplaneId(102)
-                    .airplaneType("Airbus")
-                    .flyingDistance(12000)
+                    .id(102)
+                    .type("Airbus")
+                    .range(12000)
                     .build();
             airplaneService.saveAirplane(airplane2);
 
@@ -86,19 +86,25 @@ class AirplaneServiceImplTest {
         @Test
         void findHowManyAirplaneByAirplaneTypeContaining_shouldReturnOne_whenFound()
         {
-            assertEquals(1, airplaneService.findHowManyAirplaneByAirplaneTypeContaining("ing"));
+            assertEquals(1, airplaneService.findHowManyAirplaneByTypeContaining("ing"));
         }
 
         @Test
         void findHowManyAirplaneByAirplaneTypeContaining_shouldReturnZero_whenNotFound()
         {
-            assertEquals(0, airplaneService.findHowManyAirplaneByAirplaneTypeContaining("dad"));
+            assertEquals(0, airplaneService.findHowManyAirplaneByTypeContaining("dad"));
         }
 
         @Test
         void findAirplaneThatCanSatisfyACertainFlight_shouldReturnAListOfAirplane_whenFound()
         {
             assertEquals(2, airplaneService.findAirplaneThatCanSatisfyACertainFlight("A760").size());
+        }
+
+        @Test
+        void listOfAirplaneIdAndAirplaneTypeAndNumberOfPilotsWhoCanFlyThem_shouldReturnNoData_WhenNotFound()
+        {
+            assertEquals(0, airplaneService.listOfAirplaneIdAndAirplaneTypeAndNumberOfPilotsWhoCanFlyThem().size());
         }
 
 

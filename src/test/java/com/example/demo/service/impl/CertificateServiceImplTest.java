@@ -51,23 +51,23 @@ class CertificateServiceImplTest {
 
 
             Airplane airplane1 = Airplane.builder()
-                    .airplaneType("Boeing")
-                    .airplaneId(747)
-                    .flyingDistance(4000)
+                    .type("Boeing")
+                    .id(747)
+                    .range(4000)
                     .build();
             airplaneService.saveAirplane(airplane1);
 
             Airplane airplane2 = Airplane.builder()
-                    .airplaneType("Boeing")
-                    .airplaneId(747)
-                    .flyingDistance(4000)
+                    .type("Boeing")
+                    .id(747)
+                    .range(4000)
                     .build();
             airplaneService.saveAirplane(airplane2);
 
             Airplane airplane3 = Airplane.builder()
-                    .airplaneType("Airbus")
-                    .airplaneId(740)
-                    .flyingDistance(6000)
+                    .type("Airbus")
+                    .id(740)
+                    .range(6000)
                     .build();
             airplaneService.saveAirplane(airplane3);
 
@@ -119,6 +119,11 @@ class CertificateServiceImplTest {
             assertEquals(1, certificateService.findAllThePilotsWhoCanFlyTwoTypesOfAirplanes("Boeing", "Airbus").size());
         }
 
+        @Test
+        void findAllEmployeeByAirplaneTypeContaining_shouldReturnAListOfNames_whenFound()
+        {
+            assertEquals(2, certificateService.findPilotsByAirplaneTypeContaining("Boeing").size());
+        }
 
 
 

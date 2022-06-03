@@ -1,7 +1,8 @@
 package com.example.demo.repository;
 
-import com.example.demo.entity.Airplane;
 import com.example.demo.entity.Flight;
+import com.example.demo.service.dto.FlightsAndTotalCostDto;
+import com.example.demo.service.dto.NumberOfFlightsPerDepartureGateDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -25,10 +26,29 @@ public interface FlightRepository extends JpaRepository<Flight, String> {
 
     //14.	Cho biết các chuyến bay có thể ñược thực hiện bởi máy bay Airbus A320.
 
-    @Query(value = "SELECT f.id FROM flight f WHERE f.distance < (SELECT a.flying_distance FROM airplane a WHERE a.airplane_type = :airplane_type"
-            , nativeQuery = true)
-    List<String> findFlightsThatCanBeDoneByACertainTypeOfAirplane(@Param("airplane_type")String airplaneType);
+    @Query(value = "SELECT f.id FROM Flight f WHERE f.distance < (SELECT a.range from Airplane a WHERE a.type LIKE :type)", nativeQuery = true)
+    List<String> findAllTheFlightsThatCanBeDoneByACertainTypeOfAirplane(@Param("type") String airplaneType);
 
+    //-- 17.	Giả sử một hành khách muốn đi thẳng từ ga A đến ga B rồi quay trở về ga A.
+    //-- Cho biết các đường bay nào có thể đáp ứng yêu cầu này.
+//    List<Flight> findFlightByDepartureGateContainingAndArrivalGateContaining(String departureGate, String arrivalGate);
 
+    @Query(value = "SELECT f1.id FROM flight f1, flight f2 WHERE f1.departure_gate = f2.arrival_gate " +
+            "AND f2.departure_gate = f1.arrival_gate", nativeQuery = true)
+   List<String> findFlightThatProvidesTwoWaysTickets(String departureGate, String arrivalGate);
+
+    //-- 18. Với mỗi ga có chuyến bay xuất phát từ đó
+    //-- cho biết có bao nhiêu chuyến bay khởi hành từ ga đó.
+
+    @Query(value = "SELECT new com.example.demo.service.dto.NumberOfFlightsPerDepartureGateDto(departureGate, COUNT(departureGate)) " +
+            "FROM Flight GROUP BY departureGate" )
+    List<NumberOfFlightsPerDepartureGateDto> findNumberOfFlightsPerDepartureGate();
+
+    //-- 19. Với mỗi ga có chuyến  bay xuất phát từ đó cho biết tổng chi phí
+    //-- phải trả cho phi công lái các chuyến bay khởi hành từ ga đó.
+
+//    @Query(value = "SELECT new com.example.demo.service.dto.FlightsAndTotalCostDto(departureGate, SUM(cost)) " +
+//            "FROM Flight GROUP BY departureGate")
+//    List<FlightsAndTotalCostDto> calculateTotalCostForEachFlight();
 
 }

@@ -1,14 +1,10 @@
 package com.example.demo.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.criteria.CriteriaBuilder;
 
 @Data
 @Entity
@@ -17,11 +13,11 @@ import javax.persistence.criteria.CriteriaBuilder;
 @Builder
 public class Airplane {
     @Id
-    private Integer airplaneId;
+    private Integer id;
 
     @Column
-    private String airplaneType;
+    private String type;
 
     @Column
-    private Integer flyingDistance;
+    private Integer range;
 }
