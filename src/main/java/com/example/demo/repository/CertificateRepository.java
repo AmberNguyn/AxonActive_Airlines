@@ -1,6 +1,8 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.Certificate;
+import com.example.demo.service.dto.PilotsAndNumberOfAirplanesTheyCanFlyDto;
+import com.example.demo.service.dto.PilotsWhoCanFlyMoreThan3TypesOfPlanesAndItsMaxRangeDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -32,4 +34,42 @@ public interface CertificateRepository extends JpaRepository<Certificate, Intege
 
     //15. Cho biết tên của các phi công lái máy bay Boeing.
     List<Certificate> findPilotsByAirplaneTypeContaining(String airplaneType);
+
+
+    // -- 22. Cho biết mã số của các phi công chỉ lái được 3 loại máy bay
+    @Query(value = "SELECT employee.employeeId " +
+            "FROM Certificate " +
+            "GROUP BY employee.employeeId " +
+            "HAVING COUNT (airplane.id) = 3")
+    List<String> findListOfPilotsWhoCanOnlyFly3TypesOfPlanes();
+
+    // 23.
+    // -- 23. Với mỗi phi công có thể lái nhiều hơn 3 loại máy bay,
+    //-- cho biết mã số phi công và tầm bay lớn nhất của các loại máy bay
+    //-- mà phi công đó có thể lái.
+
+//    @Query (value = "SELECT new com.example.demo.service.dto.PilotsWhoCanFlyMoreThan3TypesOfPlanesAndItsMaxRangeDto(" +
+//            "c.employee.employeeId, MAX(c.airplane.range)) " +
+//            "FROM Certificate c " +
+//            "JOIN Airplane a " +
+//            "ON c.airplane.id = a.id " +
+//            "WHERE c.employee.employeeId IN  " +
+//            "(SELECT employee.employeeId " +
+//            "FROM Certificate " +
+//            " GROUP BY employee.employeeId " +
+//            " HAVING COUNT(airplane.id) > 3) " +
+//            "GROUP BY employee.employeeId")
+//    List<PilotsWhoCanFlyMoreThan3TypesOfPlanesAndItsMaxRangeDto> findListOfPilotsWhoCanFlyMoreThan3TypesOfPlanesAndTheirMaximumRange();
+
+    @Query(nativeQuery=true)
+    List<PilotsWhoCanFlyMoreThan3TypesOfPlanesAndItsMaxRangeDto> findPilotsCanFly3TypesOfPlanesAndItsMaxRange();
+
+
+    //-- 24. Với mỗi phi công cho biết mã số phi công
+    //-- và tổng số loại máy bay mà phi công đó có thể lái.
+
+    @Query(value = "SELECT new com.example.demo.service.dto.PilotsAndNumberOfAirplanesTheyCanFlyDto(c.employee.employeeId, COUNT(c.airplane.id)) " +
+            "FROM Certificate c " +
+            "GROUP BY c.employee.employeeId")
+    List<PilotsAndNumberOfAirplanesTheyCanFlyDto> findPilotsAndNumberOfAirplanesTheyCanFly();
 }

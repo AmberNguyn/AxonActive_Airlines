@@ -5,9 +5,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 @AllArgsConstructor
-public class FlightsAndTotalCostDto {
-        private String departureGate;
-        private Integer totalCost;
+@NoArgsConstructor
+public class DepartureGateAndTheirFlightsDto {
+    private String departureGate;
+    private Long numberOfFlightsAtThatGate;
 }

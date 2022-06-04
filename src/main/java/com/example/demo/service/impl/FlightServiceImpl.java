@@ -3,12 +3,15 @@ package com.example.demo.service.impl;
 import com.example.demo.entity.Flight;
 import com.example.demo.repository.FlightRepository;
 import com.example.demo.service.FlightService;
+import com.example.demo.service.dto.DepartureGateAndTheirFlightsDto;
 import com.example.demo.service.dto.FlightsAndTotalCostDto;
 import com.example.demo.service.dto.NumberOfFlightsPerDepartureGateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -63,6 +66,7 @@ public class FlightServiceImpl implements FlightService {
     }
 
     //14.	Cho biết các chuyến bay có thể ñược thực hiện bởi máy bay Airbus A320.
+    @Override
     public List<String> findAllTheFlightsThatCanBeDoneByACertainTypeOfAirplane(String airplaneType)
     {
         return flightRepository.findAllTheFlightsThatCanBeDoneByACertainTypeOfAirplane(airplaneType);
@@ -70,37 +74,7 @@ public class FlightServiceImpl implements FlightService {
 
     // -- 17.	Giả sử một hành khách muốn đi thẳng từ ga A đến ga B rồi quay trở về ga A.
     // -- Cho biết các đường bay nào có thể đáp ứng yêu cầu này.
-//    public List<String> listOfAllTheFlightFromAtoB(String departureGate, String arrivalGate)
-//    {
-//        List<String> listOfAllTheFlightIdHasTheSameDepartureGateAndArrivalGate = new ArrayList<>();
-//        for (Flight firstFlight: flightRepository.findFlightByDepartureGateContainingAndArrivalGateContaining(departureGate,arrivalGate)
-//             ) {
-//            for (Flight secondFlight: flightRepository.findFlightByDepartureGateContainingAndArrivalGateContaining(departureGate, arrivalGate)
-//                 ) {
-//                if (firstFlight.getDepartureGate().equalsIgnoreCase(secondFlight.getArrivalGate()) && secondFlight.getDepartureGate().equalsIgnoreCase(firstFlight.getArrivalGate()))
-//                {
-//                    listOfAllTheFlightIdHasTheSameDepartureGateAndArrivalGate.add(firstFlight.getId());
-//                }
-//            }
-//        }
-//
-//        for (int i = 0; i < flightRepository.findAll().size()-1; i++)
-//        {
-//            for (int j = 1; j < flightRepository.findAll().size()-1; j++)
-//            {
-//                if (flightRepository.findFlightByDepartureGateContainingAndArrivalGateContaining(departureGate,arrivalGate).get(i).getDepartureGate().equals(
-//                        flightRepository.findFlightByDepartureGateContainingAndArrivalGateContaining(departureGate,arrivalGate).get(j).getArrivalGate()) &&
-//                        flightRepository.findFlightByDepartureGateContainingAndArrivalGateContaining(departureGate,arrivalGate).get(j).getDepartureGate().equals(
-//                                flightRepository.findFlightByDepartureGateContainingAndArrivalGateContaining(departureGate,arrivalGate).get(i).getArrivalGate())
-//                )
-//                {
-//                    listOfAllTheFlightIdHasTheSameDepartureGateAndArrivalGate.add(flightRepository.findFlightByDepartureGateContainingAndArrivalGateContaining(departureGate,arrivalGate).get(i).getId());
-//                }
-//            }
-//        }
-//        return listOfAllTheFlightIdHasTheSameDepartureGateAndArrivalGate;
-//    }
-
+    @Override
     public List<String> findFlightThatProvidesTwoWaysTickets(String departureGate, String arrivalGate)
     {
         return flightRepository.findFlightThatProvidesTwoWaysTickets(departureGate, arrivalGate);
@@ -108,7 +82,7 @@ public class FlightServiceImpl implements FlightService {
 
     //-- 18. Với mỗi ga có chuyến bay xuất phát từ đó
     //-- cho biết có bao nhiêu chuyến bay khởi hành từ ga đó.
-
+    @Override
     public List<NumberOfFlightsPerDepartureGateDto> findNumberOfFlightsPerDepartureGate()
     {
         return flightRepository.findNumberOfFlightsPerDepartureGate();
@@ -117,8 +91,24 @@ public class FlightServiceImpl implements FlightService {
     //-- 19. Với mỗi ga có chuyến  bay xuất phát từ đó cho biết tổng chi phí
     //-- phải trả cho phi công lái các chuyến bay khởi hành từ ga đó.
 
+//    @Override
 //    public List<FlightsAndTotalCostDto> calculateTotalCostForEachFlight()
 //    {
 //        return flightRepository.calculateTotalCostForEachFlight();
 //    }
+
+    //-- 20. Cho biết danh sách các chuyến bay có thể khởi hành trước 12:00
+    @Override
+    public List<Flight> findFlightsByDepartureTimeBefore(LocalTime departureTime)
+    {
+        return flightRepository.findFlightsByDepartureTimeBefore(departureTime);
+    }
+
+    // --21.Với mỗi địa điểm xuất phát cho biết có
+    //-- bao nhiêu chuyến bay có thể khởi hành trước 12:00.
+    @Override
+    public List<DepartureGateAndTheirFlightsDto> findNumberOfFlightAtAParticularGateBeforeAParticularTime(LocalTime departureTime)
+    {
+        return flightRepository.findNumberOfFlightAtAParticularGateBeforeAParticularTime(departureTime);
+    }
 }

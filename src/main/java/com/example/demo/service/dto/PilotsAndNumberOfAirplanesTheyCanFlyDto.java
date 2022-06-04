@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FlightsAndTotalCostDto {
-        private String departureGate;
-        private Integer totalCost;
+public class PilotsAndNumberOfAirplanesTheyCanFlyDto {
+    private Integer employeeId;
+    private Long numberOfAirplanesAPilotCanFly;
 }

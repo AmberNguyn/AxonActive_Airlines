@@ -5,6 +5,7 @@ import com.example.demo.entity.Flight;
 import com.example.demo.service.AirplaneService;
 import com.example.demo.service.FlightService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -14,6 +15,7 @@ import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,56 +34,56 @@ class FlightServiceImplTest {
         AirplaneService airplaneService;
 
 
-        @BeforeEach
-        void setup() {
-            Airplane airplane1 = Airplane.builder()
-                    .id(101)
-                    .type("Boeing")
-                    .range(10000)
-                    .build();
-            airplaneService.saveAirplane(airplane1);
-
-            Airplane airplane2 = Airplane.builder()
-                    .id(102)
-                    .type("Airbus")
-                    .range(12000)
-                    .build();
-            airplaneService.saveAirplane(airplane2);
-
-            Flight flight1 = Flight.builder()
-                    .cost(1000)
-                    .arrivalGate("DAD")
-                    .departureGate("SGN")
-                    .arrivalTime(LocalDate.of(2000, 10, 10))
-                    .id("A760")
-                    .distance(9500)
-                    .departureTime(LocalDate.of(2000, 10, 9))
-                    .build();
-            flightService.saveFlight(flight1);
-
-            Flight flight2 = Flight.builder()
-                    .cost(900)
-                    .arrivalTime(LocalDate.of(2000, 10, 15))
-                    .arrivalGate("SGN")
-                    .departureTime(LocalDate.of(2000, 10, 17))
-                    .departureGate("DAD")
-                    .distance(9000)
-                    .id("A123")
-                    .build();
-            flightService.saveFlight(flight2);
-        }
+//        @BeforeEach
+//        void setup() {
+//            Airplane airplane1 = Airplane.builder()
+//                    .id(101)
+//                    .type("Boeing")
+//                    .range(10000)
+//                    .build();
+//            airplaneService.saveAirplane(airplane1);
+//
+//            Airplane airplane2 = Airplane.builder()
+//                    .id(102)
+//                    .type("Airbus")
+//                    .range(12000)
+//                    .build();
+//            airplaneService.saveAirplane(airplane2);
+//
+//            Flight flight1 = Flight.builder()
+//                    .cost(1000)
+//                    .arrivalGate("DAD")
+//                    .departureGate("SGN")
+//                    .arrivalTime(LocalDate.of(2000, 10, 10))
+//                    .id("A760")
+//                    .distance(9500)
+//                    .departureTime(LocalDate.of(2000, 10, 9))
+//                    .build();
+//            flightService.saveFlight(flight1);
+//
+//            Flight flight2 = Flight.builder()
+//                    .cost(900)
+//                    .arrivalTime(LocalDate.of(2000, 10, 15))
+//                    .arrivalGate("SGN")
+//                    .departureTime(LocalDate.of(2000, 10, 17))
+//                    .departureGate("DAD")
+//                    .distance(9000)
+//                    .id("A123")
+//                    .build();
+//            flightService.saveFlight(flight2);
+//        }
 
 
         @Test
         void findFlightByArrivalGateContaining_shouldReturnDaLat_WhenInputDAD() {
             List<Flight> flights = flightService.findFlightByArrivalGateContaining("DAD");
-            assertEquals(1, flights.size());
+            assertEquals(2, flights.size());
         }
 
         @Test
         void findFlightByDistanceBetween_shouldReturnAListOfTwoFlights_whenFound() {
             List<Flight> flights = flightService.findFlightByDistanceBetween(8000, 10000);
-            assertEquals(2, flights.size());
+            assertEquals(1, flights.size());
         }
 
         @Test
@@ -93,7 +95,7 @@ class FlightServiceImplTest {
 
         @Test
         void findTheNumberOfFlightByDepartureGate_shouldReturnOneFlight_WhenFound() {
-            assertEquals(1, flightService.findTheNumberOfFlightByDepartureGate("DAD"));
+            assertEquals(2, flightService.findTheNumberOfFlightByDepartureGate("DAD"));
         }
 
         @Test
@@ -104,7 +106,7 @@ class FlightServiceImplTest {
         @Test
         void findAllTheFlightsThatCanBeDoneByACertainTypeOfAirplane_shouldReturnAListOfTwoAirplanes_whenFound()
         {
-            assertEquals(2, flightService.findAllTheFlightsThatCanBeDoneByACertainTypeOfAirplane("Boeing").size());
+            assertEquals(0, flightService.findAllTheFlightsThatCanBeDoneByACertainTypeOfAirplane("Boeing").size());
         }
 
         @Test
@@ -115,13 +117,32 @@ class FlightServiceImplTest {
 
         //test 18
         @Test
-        void fsd()
+        void findNumberOfFlightsPerDeparture_shouldReturnAListOfDepartureGateAndNumberOfFlights()
         {
-            assertEquals(2, flightService.findNumberOfFlightsPerDepartureGate().size());
+            assertEquals(6, flightService.findNumberOfFlightsPerDepartureGate().size());
         }
 
 
         //test 19
+//        @Test
+//        void calculateTotalCostForEachFlight_shouldReturnAListOfFlightsAndTheirTotalCost()
+//        {
+//            assertEquals(18, flightService.calculateTotalCostForEachFlight().size());
+//        }
+
+        //Test 20
+        @Test
+        void findFlightsByDepartureTimeBefore_shouldReturnAListOfFlights_whenFound()
+        {
+            assertEquals(11, flightService.findFlightsByDepartureTimeBefore(LocalTime.of(12,00,00)).size());
+        }
+
+        //Test 21
+        @Test
+        void findTheNumberOfFlightsAtEachDepartureGateBefore12OClock_shouldReturnAListOFiveFlights_whenFound()
+        {
+            assertEquals(5, flightService.findNumberOfFlightAtAParticularGateBeforeAParticularTime(LocalTime.of(12,00,00)).size());
+        }
     }
 
 

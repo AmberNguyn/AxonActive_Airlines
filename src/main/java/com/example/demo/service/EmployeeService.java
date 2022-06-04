@@ -26,4 +26,12 @@ public interface EmployeeService {
     public List<Employee> allEmployees();
 
 
+    // 25. Tìm các nhân viên không phải là phi công.
+
+    public List<Integer> findAllEmployeesWhoAreNotPilots();
+
+
+    // 26. Show id of employees who have the highest salary
+    List<Integer> findEmployeeWhoHasTheHighestSalary();
+
 }

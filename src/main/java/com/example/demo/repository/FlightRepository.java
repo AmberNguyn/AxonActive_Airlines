@@ -1,6 +1,7 @@
 package com.example.demo.repository;
 
 import com.example.demo.entity.Flight;
+import com.example.demo.service.dto.DepartureGateAndTheirFlightsDto;
 import com.example.demo.service.dto.FlightsAndTotalCostDto;
 import com.example.demo.service.dto.NumberOfFlightsPerDepartureGateDto;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -8,6 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalTime;
 import java.util.List;
 
 @Repository
@@ -47,8 +49,22 @@ public interface FlightRepository extends JpaRepository<Flight, String> {
     //-- 19. Với mỗi ga có chuyến  bay xuất phát từ đó cho biết tổng chi phí
     //-- phải trả cho phi công lái các chuyến bay khởi hành từ ga đó.
 
-//    @Query(value = "SELECT new com.example.demo.service.dto.FlightsAndTotalCostDto(departureGate, SUM(cost)) " +
-//            "FROM Flight GROUP BY departureGate")
+//    @Query(value = "SELECT new com.example.demo.service.dto.FlightsAndTotalCostDto(f.departureGate, SUM(f.cost)) " +
+//            "FROM Flight f GROUP BY f.departureGate")
 //    List<FlightsAndTotalCostDto> calculateTotalCostForEachFlight();
+
+
+    //-- 20. Cho biết danh sách các chuyến bay có thể khởi hành trước 12:00
+    List<Flight> findFlightsByDepartureTimeBefore(LocalTime departureTime);
+
+
+    // --21.Với mỗi địa điểm xuất phát cho biết có
+    //-- bao nhiêu chuyến bay có thể khởi hành trước 12:00.
+    @Query(value = "SELECT new com.example.demo.service.dto.DepartureGateAndTheirFlightsDto(departureGate, COUNT(id)) " +
+            "FROM Flight " +
+            "WHERE departureTime < :departureTime " +
+            "GROUP BY departureGate")
+    List<DepartureGateAndTheirFlightsDto> findNumberOfFlightAtAParticularGateBeforeAParticularTime(@Param("departureTime")
+                                                                                                   LocalTime departureTime);
 
 }

@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -61,7 +62,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findAll();
     }
 
-
+    @Override
     public List<String> findNameOfAllTheEmployeesWhoCanFindACertainTypeofAirplane(String airplaneType) {
         List<String> nameOfAllTheEmployeesWhoCanFlyACertainTypeOfAirplane = new ArrayList<>();
         for (Employee employee:allEmployees())
@@ -74,6 +75,20 @@ public class EmployeeServiceImpl implements EmployeeService {
             }
         }
         return nameOfAllTheEmployeesWhoCanFlyACertainTypeOfAirplane;
+    }
+
+
+    // 25. Tìm các nhân viên không phải là phi công.
+    @Override
+    public List<Integer> findAllEmployeesWhoAreNotPilots()
+    {
+        return employeeRepository.findAllEmployeesWhoAreNotPilots();
+    }
+
+    // 26. Show id of employees who have the highest salary
+    public List<Integer> findEmployeeWhoHasTheHighestSalary()
+    {
+        return employeeRepository.findEmployeeWhoHasTheHighestSalary();
     }
 
 

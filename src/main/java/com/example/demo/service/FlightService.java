@@ -3,11 +3,13 @@ package com.example.demo.service;
 
 import com.example.demo.entity.Flight;
 import com.example.demo.repository.FlightRepository;
+import com.example.demo.service.dto.DepartureGateAndTheirFlightsDto;
 import com.example.demo.service.dto.FlightsAndTotalCostDto;
 import com.example.demo.service.dto.NumberOfFlightsPerDepartureGateDto;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,5 +51,13 @@ public interface FlightService {
 
     //-- 19. Với mỗi ga có chuyến  bay xuất phát từ đó cho biết tổng chi phí
     //-- phải trả cho phi công lái các chuyến bay khởi hành từ ga đó.
-//    List<FlightsAndTotalCostDto> calculateTotalCostForEachFlight();
+//    public List<FlightsAndTotalCostDto> calculateTotalCostForEachFlight();
+
+
+    //-- 20. Cho biết danh sách các chuyến bay có thể khởi hành trước 12:00
+    public List<Flight> findFlightsByDepartureTimeBefore(LocalTime departureTime);
+
+    // --21.Với mỗi địa điểm xuất phát cho biết có
+    //-- bao nhiêu chuyến bay có thể khởi hành trước 12:00.
+    public List<DepartureGateAndTheirFlightsDto> findNumberOfFlightAtAParticularGateBeforeAParticularTime(LocalTime departureTime);
 }

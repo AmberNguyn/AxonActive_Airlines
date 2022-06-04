@@ -9,6 +9,7 @@ import org.apache.tomcat.jni.Local;
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 @Data
 @Entity
@@ -30,10 +31,10 @@ public class Flight {
     private Integer distance;
 
     @Column
-    private LocalDate departureTime;
+    private LocalTime departureTime;
 
     @Column
-    private LocalDate arrivalTime;
+    private LocalTime arrivalTime;
 
     @Column
     private Integer cost;
