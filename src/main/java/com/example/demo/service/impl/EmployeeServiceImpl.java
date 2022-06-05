@@ -91,5 +91,11 @@ public class EmployeeServiceImpl implements EmployeeService {
         return employeeRepository.findEmployeeWhoHasTheHighestSalary();
     }
 
+    // 27.Show total salary have to pay for all the pilots
+    public int showTotalSalaryHaveToPayForAllPilots()
+    {
+        return employeeRepository.showTotalSalaryHaveToPayForAllPilots();
+    }
+
 
 }

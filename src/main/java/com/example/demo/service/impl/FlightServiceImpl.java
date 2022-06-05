@@ -5,6 +5,7 @@ import com.example.demo.repository.FlightRepository;
 import com.example.demo.service.FlightService;
 import com.example.demo.service.dto.DepartureGateAndTheirFlightsDto;
 import com.example.demo.service.dto.FlightsAndTotalCostDto;
+import com.example.demo.service.dto.FlightsCanBeDoneByATypeOfAirplaneDto;
 import com.example.demo.service.dto.NumberOfFlightsPerDepartureGateDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
@@ -91,11 +92,11 @@ public class FlightServiceImpl implements FlightService {
     //-- 19. Với mỗi ga có chuyến  bay xuất phát từ đó cho biết tổng chi phí
     //-- phải trả cho phi công lái các chuyến bay khởi hành từ ga đó.
 
-//    @Override
-//    public List<FlightsAndTotalCostDto> calculateTotalCostForEachFlight()
-//    {
-//        return flightRepository.calculateTotalCostForEachFlight();
-//    }
+    @Override
+    public List<FlightsAndTotalCostDto> calculateTotalCostForEachFlight()
+    {
+        return flightRepository.calculateTotalCostForEachFlight();
+    }
 
     //-- 20. Cho biết danh sách các chuyến bay có thể khởi hành trước 12:00
     @Override
@@ -110,5 +111,13 @@ public class FlightServiceImpl implements FlightService {
     public List<DepartureGateAndTheirFlightsDto> findNumberOfFlightAtAParticularGateBeforeAParticularTime(LocalTime departureTime)
     {
         return flightRepository.findNumberOfFlightAtAParticularGateBeforeAParticularTime(departureTime);
+    }
+
+
+    //28. -- 28. Tìm các chuyến bay có thể được thực hiện bởi tất cả các loại máy bay Boeing.
+    @Override
+    public List<FlightsCanBeDoneByATypeOfAirplaneDto> findFlightsThatCanBeDoneByATypeOfAirplane()
+    {
+        return flightRepository.findFlightsThatCanBeDoneByATypeOfAirplane();
     }
 }

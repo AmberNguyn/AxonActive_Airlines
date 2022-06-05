@@ -82,7 +82,7 @@ public class CertificateServiceImpl implements CertificateService {
 
     //-- 24. Với mỗi phi công cho biết mã số phi công
     //-- và tổng số loại máy bay mà phi công đó có thể lái.
-
+    @Override
     public List<PilotsAndNumberOfAirplanesTheyCanFlyDto> findPilotsAndNumberOfAirplanesTheyCanFly() {
         return certificateRepository.findPilotsAndNumberOfAirplanesTheyCanFly();
     }

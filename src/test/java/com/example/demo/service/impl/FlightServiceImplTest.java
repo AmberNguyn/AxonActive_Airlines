@@ -124,11 +124,11 @@ class FlightServiceImplTest {
 
 
         //test 19
-//        @Test
-//        void calculateTotalCostForEachFlight_shouldReturnAListOfFlightsAndTheirTotalCost()
-//        {
-//            assertEquals(18, flightService.calculateTotalCostForEachFlight().size());
-//        }
+        @Test
+        void calculateTotalCostForEachFlight_shouldReturnAListOfFlightsAndTheirTotalCost()
+        {
+            assertEquals(6, flightService.calculateTotalCostForEachFlight().size());
+        }
 
         //Test 20
         @Test
@@ -142,6 +142,13 @@ class FlightServiceImplTest {
         void findTheNumberOfFlightsAtEachDepartureGateBefore12OClock_shouldReturnAListOFiveFlights_whenFound()
         {
             assertEquals(5, flightService.findNumberOfFlightAtAParticularGateBeforeAParticularTime(LocalTime.of(12,00,00)).size());
+        }
+
+        //Test 28
+        @Test
+        void findFlightsThatCanBeDoneByATypeOfAirplane_shouldReturnAList_whenFound()
+        {
+            assertEquals(10, flightService.findFlightsThatCanBeDoneByATypeOfAirplane().size());
         }
     }
 

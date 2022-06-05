@@ -17,7 +17,36 @@ import java.time.LocalTime;
 @AllArgsConstructor
 @Builder
 
+@SqlResultSetMapping(
+        name = "flightsCanBeDoneByATypeOfAirplane",
+        classes = {
+                @ConstructorResult(
+                        targetClass = com.example.demo.service.dto.FlightsCanBeDoneByATypeOfAirplaneDto.class,
+                        columns = {
+                                @ColumnResult(name = "flightId", type = String.class),
+                                @ColumnResult(name = "distance", type = Integer.class)
+                        }
+                )
+        }
+
+)
+
+
+@NamedNativeQuery(
+        name = Flight.FLIGHTS_CAN_BE_DONE_BY_A_TYPE_OF_AIRPLANE,
+        query = "SELECT f.id as flightId, f.distance as distance FROM flight f " +
+                "WHERE f.distance < ( SELECT MIN(a.range) " +
+                "FROM airplane a " +
+                "WHERE a.type LIKE '%Boeing%')",
+        resultSetMapping = "flightsCanBeDoneByATypeOfAirplane"
+
+)
+
+
 public class Flight {
+    public static final String FLIGHTS_CAN_BE_DONE_BY_A_TYPE_OF_AIRPLANE = "Flight.findFlightsThatCanBeDoneByATypeOfAirplane";
+
+
     @Id
     private String id;
 

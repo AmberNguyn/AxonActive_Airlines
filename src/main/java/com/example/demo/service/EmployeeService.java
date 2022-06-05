@@ -34,4 +34,7 @@ public interface EmployeeService {
     // 26. Show id of employees who have the highest salary
     List<Integer> findEmployeeWhoHasTheHighestSalary();
 
+    // 27.Show total salary have to pay for all the pilots
+    public int showTotalSalaryHaveToPayForAllPilots();
+
 }

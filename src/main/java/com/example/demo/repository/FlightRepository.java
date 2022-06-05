@@ -3,6 +3,7 @@ package com.example.demo.repository;
 import com.example.demo.entity.Flight;
 import com.example.demo.service.dto.DepartureGateAndTheirFlightsDto;
 import com.example.demo.service.dto.FlightsAndTotalCostDto;
+import com.example.demo.service.dto.FlightsCanBeDoneByATypeOfAirplaneDto;
 import com.example.demo.service.dto.NumberOfFlightsPerDepartureGateDto;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -49,9 +50,9 @@ public interface FlightRepository extends JpaRepository<Flight, String> {
     //-- 19. Với mỗi ga có chuyến  bay xuất phát từ đó cho biết tổng chi phí
     //-- phải trả cho phi công lái các chuyến bay khởi hành từ ga đó.
 
-//    @Query(value = "SELECT new com.example.demo.service.dto.FlightsAndTotalCostDto(f.departureGate, SUM(f.cost)) " +
-//            "FROM Flight f GROUP BY f.departureGate")
-//    List<FlightsAndTotalCostDto> calculateTotalCostForEachFlight();
+    @Query(value = "SELECT new com.example.demo.service.dto.FlightsAndTotalCostDto(f.departureGate, SUM(f.cost)) " +
+            "FROM Flight f GROUP BY f.departureGate")
+    List<FlightsAndTotalCostDto> calculateTotalCostForEachFlight();
 
 
     //-- 20. Cho biết danh sách các chuyến bay có thể khởi hành trước 12:00
@@ -67,4 +68,8 @@ public interface FlightRepository extends JpaRepository<Flight, String> {
     List<DepartureGateAndTheirFlightsDto> findNumberOfFlightAtAParticularGateBeforeAParticularTime(@Param("departureTime")
                                                                                                    LocalTime departureTime);
 
+    //28. -- 28. Tìm các chuyến bay có thể được thực hiện bởi tất cả các loại máy bay Boeing.
+
+    @Query(nativeQuery = true)
+    List<FlightsCanBeDoneByATypeOfAirplaneDto> findFlightsThatCanBeDoneByATypeOfAirplane();
 }

@@ -6,6 +6,7 @@ import com.example.demo.entity.Employee;
 import com.example.demo.service.AirplaneService;
 import com.example.demo.service.CertificateService;
 import com.example.demo.service.EmployeeService;
+import com.example.demo.service.dto.PilotsAndNumberOfAirplanesTheyCanFlyDto;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Nested;
@@ -15,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -141,7 +144,11 @@ class CertificateServiceImplTest {
         }
 
         //Test 24
-
+        @Test
+        void  findPilotsAndNumberOfAirplanesTheyCanFly_shouldReturnAListOfPilots_whenFound()
+        {
+            assertEquals(12, certificateService.findPilotsAndNumberOfAirplanesTheyCanFly().size());
+        }
 
 
 

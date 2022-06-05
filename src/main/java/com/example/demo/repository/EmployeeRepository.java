@@ -33,4 +33,12 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Query(value = "SELECT e.employeeId FROM Employee e " +
             "WHERE salary = (SELECT MAX(salary) FROM Employee)")
     List<Integer> findEmployeeWhoHasTheHighestSalary();
+
+
+    // 27.Show total salary have to pay for all the pilots
+
+    @Query (value = "SELECT SUM(e.salary) FROM Employee e WHERE e.employeeId IN" +
+            " (SELECT c.employee.employeeId FROM Certificate c)")
+    int showTotalSalaryHaveToPayForAllPilots();
+
 }

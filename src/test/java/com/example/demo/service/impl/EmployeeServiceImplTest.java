@@ -133,6 +133,13 @@ class EmployeeServiceImplTest {
             assertEquals(269734834, employeeService.findEmployeeWhoHasTheHighestSalary().get(0));
         }
 
+        //27.
+        @Test
+        void showTotalSalaryHaveToPayForAllPilotss_shouldReturnSumOfMoney()
+        {
+            assertEquals(2064793, employeeService.showTotalSalaryHaveToPayForAllPilots());
+        }
+
 
 
 
